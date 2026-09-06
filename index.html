@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Clearance System</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="login-box">
+            <h1>🏛️ Digital Clearance System</h1>
+            <h2>Login</h2>
+            
+            <form id="loginForm">
+                <div class="input-group">
+                    <label for="student_id">Student ID</label>
+                    <input type="text" id="student_id" placeholder="Enter your Student ID" required>
+                </div>
+                
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Enter your Password" required>
+                </div>
+                
+                <button type="submit" class="btn-primary">Login</button>
+            </form>
+            
+            <p class="register-link">Don't have an account? <a href="#" onclick="showRegister()">Register here</a></p>
+        </div>
+        
+        <!-- Registration Form (hidden by default) -->
+        <div class="register-box" style="display:none;">
+            <h2>Register</h2>
+            <form id="registerForm">
+                <div class="input-group">
+                    <label for="reg_student_id">Student ID</label>
+                    <input type="text" id="reg_student_id" required>
+                </div>
+                <div class="input-group">
+                    <label for="reg_full_name">Full Name</label>
+                    <input type="text" id="reg_full_name" required>
+                </div>
+                <div class="input-group">
+                    <label for="reg_email">Email</label>
+                    <input type="email" id="reg_email" required>
+                </div>
+                <div class="input-group">
+                    <label for="reg_password">Password</label>
+                    <input type="password" id="reg_password" required>
+                </div>
+                <button type="submit" class="btn-primary">Register</button>
+            </form>
+            <p>Already have an account? <a href="#" onclick="showLogin()">Login here</a></p>
+        </div>
+    </div>
+    
+    <script src="js/script.js"></script>
+</body>
+</html>
