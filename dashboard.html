@@ -3,22 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Digital Clearance</title>
+    <title>Student Dashboard - Digital Clearance</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <div class="dashboard-container">
+        <!-- Header -->
         <div class="dashboard-header">
             <h1>🏛️ Digital Clearance System</h1>
             <div class="user-info">
-                <span id="userName">Welcome, Student</span>
+                <span>Welcome, Student</span>
                 <button onclick="logout()" class="logout-btn">Logout</button>
             </div>
         </div>
         
-        <h2>My Clearance Status</h2>
-        <div class="clearance-grid">
-            <!-- Will be populated by JavaScript -->
+        <!-- Content -->
+        <div class="dashboard-content">
+            <h2>📊 My Clearance Status</h2>
+            
+            <!-- Statistics -->
+            <div class="clearance-stats">
+                <div class="stat-card stat-total">
+                    <h3>Total Departments</h3>
+                    <p id="totalDepts">0</p>
+                </div>
+                <div class="stat-card stat-cleared">
+                    <h3>✅ Cleared</h3>
+                    <p id="clearedDepts">0</p>
+                </div>
+                <div class="stat-card stat-pending">
+                    <h3>⏳ Pending</h3>
+                    <p id="pendingDepts">0</p>
+                </div>
+                <div class="stat-card stat-rejected">
+                    <h3>❌ Rejected</h3>
+                    <p id="rejectedDepts">0</p>
+                </div>
+            </div>
+            
+            <!-- Clearance Grid -->
+            <div class="clearance-grid">
+                <!-- Populated by JavaScript -->
+            </div>
         </div>
     </div>
     
