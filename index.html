@@ -3,72 +3,812 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Clearance System - Login</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>ClearanceHub - Digital Clearance System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-dark: #4338ca;
+            --primary-light: #818cf8;
+            --bg-dark: #0f172a;
+            --bg-card: rgba(255, 255, 255, 0.03);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: rgba(255, 255, 255, 0.08);
+            --success: #22c55e;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Background */
+        .bg-animation {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.45;
+            animation: float 18s infinite ease-in-out;
+        }
+
+        .orb-1 {
+            width: 480px;
+            height: 480px;
+            background: #4f46e5;
+            top: -120px;
+            left: -100px;
+        }
+
+        .orb-2 {
+            width: 380px;
+            height: 380px;
+            background: #7c3aed;
+            bottom: -80px;
+            right: -60px;
+            animation-delay: -6s;
+        }
+
+        .orb-3 {
+            width: 280px;
+            height: 280px;
+            background: #0ea5e9;
+            top: 40%;
+            left: 30%;
+            animation-delay: -12s;
+        }
+
+        .orb-4 {
+            width: 220px;
+            height: 220px;
+            background: #6366f1;
+            bottom: 20%;
+            left: 10%;
+            animation-delay: -3s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -40px) scale(1.05); }
+            66% { transform: translate(-20px, 20px) scale(0.95); }
+        }
+
+        .grid-pattern {
+            position: absolute;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            mask-image: radial-gradient(ellipse at center, black 20%, transparent 70%);
+        }
+
+        /* Main Layout */
+        .main-wrapper {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            min-height: 100vh;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Left Brand Panel */
+        .brand-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 48px 56px;
+            position: relative;
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--primary), #7c3aed);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.35rem;
+            box-shadow: 0 8px 24px rgba(79, 70, 229, 0.4);
+        }
+
+        .brand-hero {
+            margin-top: 80px;
+        }
+
+        .brand-hero h1 {
+            font-size: 3.4rem;
+            font-weight: 800;
+            line-height: 1.15;
+            letter-spacing: -1.5px;
+            margin-bottom: 20px;
+        }
+
+        .brand-hero h1 span {
+            background: linear-gradient(90deg, #818cf8, #c4b5fd);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .brand-hero p {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            max-width: 420px;
+            line-height: 1.7;
+        }
+
+        .brand-features {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            margin-top: 48px;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-size: 0.95rem;
+            color: #cbd5e1;
+        }
+
+        .feature i {
+            width: 36px;
+            height: 36px;
+            background: rgba(79, 70, 229, 0.15);
+            border: 1px solid rgba(79, 70, 229, 0.25);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-light);
+            font-size: 0.9rem;
+        }
+
+        .brand-stats {
+            display: flex;
+            gap: 40px;
+            margin-top: 60px;
+            padding-top: 32px;
+            border-top: 1px solid var(--border);
+        }
+
+        .stat-number {
+            display: block;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        /* Right Form Panel */
+        .form-panel {
+            width: 480px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+        }
+
+        .form-container {
+            width: 100%;
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(24px);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 40px 36px;
+            box-shadow: 
+                0 25px 50px -12px rgba(0, 0, 0, 0.5),
+                0 0 0 1px rgba(255, 255, 255, 0.05);
+        }
+
+        .form-box {
+            display: none;
+        }
+
+        .form-box.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-header {
+            margin-bottom: 32px;
+        }
+
+        .form-header h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+        }
+
+        .form-header p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #e2e8f0;
+            margin-bottom: 8px;
+        }
+
+        .form-group label i {
+            color: var(--primary-light);
+            font-size: 0.85rem;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 13px 16px;
+            color: white;
+            font-size: 0.95rem;
+            font-family: inherit;
+            transition: all 0.25s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: rgba(79, 70, 229, 0.08);
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.15);
+        }
+
+        .form-group input::placeholder {
+            color: #64748b;
+        }
+
+        .password-input-wrapper {
+            position: relative;
+        }
+
+        .password-input-wrapper input {
+            padding-right: 48px;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #64748b;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: color 0.2s;
+        }
+
+        .toggle-password:hover {
+            color: var(--primary-light);
+        }
+
+        .password-strength {
+            margin-top: 10px;
+        }
+
+        .strength-track {
+            height: 4px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .strength-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.3s ease, background 0.3s ease;
+        }
+
+        .strength-label {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 6px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            font-size: 0.875rem;
+        }
+
+        .checkbox {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            color: #cbd5e1;
+        }
+
+        .checkbox input {
+            width: 16px;
+            height: 16px;
+            accent-color: var(--primary);
+        }
+
+        .forgot-link {
+            color: var(--primary-light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .forgot-link:hover {
+            color: white;
+        }
+
+        .btn-primary {
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary), #7c3aed);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 15px;
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(79, 70, 229, 0.35);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba(79, 70, 229, 0.45);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 28px 0;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .divider span {
+            padding: 0 16px;
+        }
+
+        .social-login {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+
+        .social-btn {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 12px;
+            color: #e2e8f0;
+            font-size: 0.9rem;
+            font-weight: 500;
+            font-family: inherit;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.25s ease;
+        }
+
+        .social-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .switch-text {
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .switch-text a {
+            color: var(--primary-light);
+            text-decoration: none;
+            font-weight: 600;
+            margin-left: 4px;
+            transition: color 0.2s;
+        }
+
+        .switch-text a:hover {
+            color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .main-wrapper {
+                flex-direction: column;
+            }
+
+            .brand-panel {
+                padding: 32px 24px 20px;
+            }
+
+            .brand-hero {
+                margin-top: 40px;
+            }
+
+            .brand-hero h1 {
+                font-size: 2.4rem;
+            }
+
+            .brand-stats {
+                margin-top: 40px;
+            }
+
+            .form-panel {
+                width: 100%;
+                padding: 20px 24px 40px;
+            }
+
+            .form-container {
+                max-width: 440px;
+                margin: 0 auto;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .brand-hero h1 {
+                font-size: 2rem;
+            }
+
+            .form-container {
+                padding: 32px 24px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Login Box -->
-        <div class="login-box">
-            <h1>🏛️ Digital Clearance System</h1>
-            <h2>Login</h2>
-            
-            <form id="loginForm">
-                <div class="input-group">
-                    <label for="student_id">Student ID / Username</label>
-                    <input type="text" id="student_id" placeholder="Enter your Student ID" required autofocus>
+    <div class="bg-animation">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+        <div class="orb orb-4"></div>
+        <div class="grid-pattern"></div>
+    </div>
+
+    <div class="main-wrapper">
+        <!-- Left Brand Panel -->
+        <div class="brand-panel">
+            <div>
+                <div class="brand-logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <span>ClearanceHub</span>
                 </div>
-                
-                <div class="input-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" placeholder="Enter your Password" required>
+
+                <div class="brand-hero">
+                    <h1>Digital Clearance<br><span>Made Simple</span></h1>
+                    <p>Streamline your clearance process with our modern, efficient, and user-friendly platform.</p>
                 </div>
-                
-                <button type="submit" class="btn-primary">Login</button>
-            </form>
-            
-            <p class="register-link">Don't have an account? <a href="#" onclick="showRegister()">Register here</a></p>
+
+                <div class="brand-features">
+                    <div class="feature">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Fast & Secure Processing</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-sync-alt"></i>
+                        <span>Real-time Status Updates</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-laptop-code"></i>
+                        <span>100% Paperless Experience</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="brand-stats">
+                <div class="stat">
+                    <span class="stat-number">10K+</span>
+                    <span class="stat-label">Students</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">50+</span>
+                    <span class="stat-label">Departments</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">98%</span>
+                    <span class="stat-label">Satisfaction</span>
+                </div>
+            </div>
         </div>
-        
-        <!-- Registration Box -->
-        <div class="register-box">
-            <h2>📝 Register</h2>
-            <form id="registerForm">
-                <div class="input-group">
-                    <label for="reg_student_id">Student ID</label>
-                    <input type="text" id="reg_student_id" placeholder="Enter your Student ID" required>
+
+        <!-- Right Form Panel -->
+        <div class="form-panel">
+            <div class="form-container">
+                <!-- Login Form -->
+                <div class="form-box login-form active" id="loginFormBox">
+                    <div class="form-header">
+                        <h2>Welcome Back</h2>
+                        <p>Sign in to access your clearance dashboard</p>
+                    </div>
+
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <label>
+                                <i class="fas fa-user-graduate"></i>
+                                Student ID / Username
+                            </label>
+                            <input type="text" id="student_id" placeholder="Enter your Student ID" required autofocus>
+                        </div>
+
+                        <div class="form-group">
+                            <label>
+                                <i class="fas fa-lock"></i>
+                                Password
+                            </label>
+                            <div class="password-input-wrapper">
+                                <input type="password" id="password" placeholder="Enter your Password" required>
+                                <button type="button" class="toggle-password" onclick="togglePassword('password', this)">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <label class="checkbox">
+                                <input type="checkbox" id="remember">
+                                Remember me
+                            </label>
+                            <a href="#" class="forgot-link">Forgot Password?</a>
+                        </div>
+
+                        <button type="submit" class="btn-primary">
+                            <span>Sign In</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </form>
+
+                    <div class="divider">
+                        <span>Or continue with</span>
+                    </div>
+
+                    <div class="social-login">
+                        <button type="button" class="social-btn">
+                            <i class="fab fa-google"></i>
+                            Google
+                        </button>
+                        <button type="button" class="social-btn">
+                            <i class="fab fa-microsoft"></i>
+                            Microsoft
+                        </button>
+                    </div>
+
+                    <p class="switch-text">
+                        Don't have an account?
+                        <a href="#" onclick="switchForm('register'); return false;">
+                            Create one now <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </p>
                 </div>
-                
-                <div class="input-group">
-                    <label for="reg_full_name">Full Name</label>
-                    <input type="text" id="reg_full_name" placeholder="Enter your Full Name" required>
+
+                <!-- Register Form -->
+                <div class="form-box register-form" id="registerFormBox">
+                    <div class="form-header">
+                        <h2>Create Account</h2>
+                        <p>Join thousands of students using ClearanceHub</p>
+                    </div>
+
+                    <form id="registerForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>
+                                    <i class="fas fa-id-card"></i>
+                                    Student ID
+                                </label>
+                                <input type="text" id="reg_student_id" placeholder="e.g. STU2024001" required>
+                            </div>
+                            <div class="form-group">
+                                <label>
+                                    <i class="fas fa-user"></i>
+                                    Full Name
+                                </label>
+                                <input type="text" id="reg_full_name" placeholder="John Doe" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>
+                                <i class="fas fa-envelope"></i>
+                                Email Address
+                            </label>
+                            <input type="email" id="reg_email" placeholder="you@example.com" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>
+                                <i class="fas fa-lock"></i>
+                                Password
+                            </label>
+                            <div class="password-input-wrapper">
+                                <input type="password" id="reg_password" placeholder="Create a strong password" required minlength="6">
+                                <button type="button" class="toggle-password" onclick="togglePassword('reg_password', this)">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                            <div class="password-strength">
+                                <div class="strength-track">
+                                    <div class="strength-fill" id="strengthFill" style="width: 0%;"></div>
+                                </div>
+                                <span class="strength-label">Password strength: <strong id="strengthText">None</strong></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>
+                                <i class="fas fa-user-tag"></i>
+                                Role
+                            </label>
+                            <select id="reg_role">
+                                <option value="student">🎓 Student</option>
+                                <option value="hod">👔 Head of Department</option>
+                                <option value="admin">🛡️ Administrator</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn-primary">
+                            <span>Create Account</span>
+                            <i class="fas fa-user-plus"></i>
+                        </button>
+                    </form>
+
+                    <p class="switch-text" style="margin-top: 24px;">
+                        Already have an account?
+                        <a href="#" onclick="switchForm('login'); return false;">
+                            Sign in here <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </p>
                 </div>
-                
-                <div class="input-group">
-                    <label for="reg_email">Email</label>
-                    <input type="email" id="reg_email" placeholder="Enter your Email" required>
-                </div>
-                
-                <div class="input-group">
-                    <label for="reg_password">Password</label>
-                    <input type="password" id="reg_password" placeholder="Minimum 6 characters" required minlength="6">
-                </div>
-                
-                <div class="input-group">
-                    <label for="reg_role">Role</label>
-                    <select id="reg_role">
-                        <option value="student">Student</option>
-                        <option value="hod">Head of Department</option>
-                        <option value="admin">Admin</option>
-                    </select>
-                </div>
-                
-                <button type="submit" class="btn-primary">Register</button>
-            </form>
-            <p class="login-link">Already have an account? <a href="#" onclick="showLogin()">Login here</a></p>
+            </div>
         </div>
     </div>
-    
-    <script src="js/script.js"></script>
+
+    <script>
+        function switchForm(type) {
+            document.getElementById('loginFormBox').classList.remove('active');
+            document.getElementById('registerFormBox').classList.remove('active');
+            
+            if (type === 'login') {
+                document.getElementById('loginFormBox').classList.add('active');
+            } else {
+                document.getElementById('registerFormBox').classList.add('active');
+            }
+        }
+
+        function togglePassword(inputId, btn) {
+            const input = document.getElementById(inputId);
+            const icon = btn.querySelector('i');
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
+        // Password strength indicator
+        const passwordInput = document.getElementById('reg_password');
+        if (passwordInput) {
+            passwordInput.addEventListener('input', function() {
+                const val = this.value;
+                const fill = document.getElementById('strengthFill');
+                const text = document.getElementById('strengthText');
+                
+                let strength = 0;
+                if (val.length >= 6) strength += 25;
+                if (val.length >= 10) strength += 15;
+                if (/[A-Z]/.test(val)) strength += 20;
+                if (/[0-9]/.test(val)) strength += 20;
+                if (/[^A-Za-z0-9]/.test(val)) strength += 20;
+
+                fill.style.width = strength + '%';
+                
+                if (strength < 30) {
+                    fill.style.background = '#ef4444';
+                    text.textContent = 'Weak';
+                } else if (strength < 60) {
+                    fill.style.background = '#f59e0b';
+                    text.textContent = 'Fair';
+                } else if (strength < 85) {
+                    fill.style.background = '#22c55e';
+                    text.textContent = 'Good';
+                } else {
+                    fill.style.background = '#10b981';
+                    text.textContent = 'Strong';
+                }
+            });
+        }
+    </script>
 </body>
 </html>
